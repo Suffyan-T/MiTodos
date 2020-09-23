@@ -1,11 +1,12 @@
 import React from 'react'
 
-function TodoList() {
+import Todo from './Todo'
+
+function TodoList(props) {
     return (
         <div className="TodoList">
             <ul>
-                <li>Todo 1</li>
-                <li>Todo 2</li>
+                {props.todos.map(todo=> <Todo todo={todo}/>)}
             </ul>
         </div>
     )
