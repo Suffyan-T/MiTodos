@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import db from './firebase'
+
 
 // Components
 import Header from './Components/Header'
@@ -10,8 +12,16 @@ import AddTodo from './Components/AddTodo'
 function App() {
 
   // State
-  const [todos, setTodos]= useState(['Todo 1','Todo 2'])
+  const [todos, setTodos]= useState([])
   const [addTodoInput, setAddTodoInput] = useState('')
+
+  // Fetch Todos from database on app load
+  useEffect(() => {
+    //  Loads when the app fires
+    db.collection('todos').onSnapshot(snap=>{
+      setTodos(snap.docs.map(doc=>doc.data().todo))
+    })
+  }, [])
 
   // Add Todo Button Functionality
   const addTodo =e=>{
