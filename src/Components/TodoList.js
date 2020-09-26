@@ -10,7 +10,7 @@ function TodoList(props) {
         style={{display: 'flex',
         flexDirection: "column",
         alignItems: 'center',}}>
-                {props.todos.map(todo=> <Todo todo={todo}/>)}
+                {props.todos.map(todo=> <Todo todo={todo} editTodo={props.editTodo} setEditTodo={props.setEditTodo}/>)}
         </div>
     )
 }
