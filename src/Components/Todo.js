@@ -2,8 +2,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import React from 'react';
-import db from '../firebase'
+import db from '../firebase';
+import EditTodo from './EditTodo'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,15 +23,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Todo(props) {
   const classes = useStyles();
-  console.log(db.collection('todos').doc(props.todo.id))
+
   return (
-    <div className={classes.root}>
-            <List>
-                <ListItem>
-                    <ListItemText primary='todo' secondary={props.todo.todo}/>
-                </ListItem>
-                <button onClick={e=> db.collection('todos').doc(props.todo.id).delete()}>Delete</button>
-            </List>
+    <div>
+          <List  style={{
+      display: 'flex',
+      width: 1300,
+      flexDirection: "row",
+      margin: 10,
+      borderRadius: 10,
+      backgroundColor: 'white',
+      // boxShadow: "3px 3px 3px 3px #BEBEBE",
+      alignItems: 'center',}}>
+              <ListItem>
+                  <ListItemText primary='todo' secondary={props.todo.todo}/>
+              </ListItem>
+              <DeleteForeverIcon onClick={()=> db.collection('todos').doc(props.todo.id).delete()}/>
+              <EditTodo todo={props.todo}/>
+          </List>
     </div>
   );
 }

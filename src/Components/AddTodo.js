@@ -1,9 +1,11 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import db from '../firebase'
+import firebase from 'firebase'
 
 
 // Material UI Styling
@@ -21,7 +23,22 @@ const useStyles = makeStyles((theme) => ({
 
 function AddTodo(props) {
 
-    const classes = useStyles();
+  const classes = useStyles();
+
+  const [addTodoInput, setAddTodoInput] = useState('')
+
+  // Add Todo Button Functionality
+  const addTodo =e=>{
+      // Prevents app from reloading on each button press
+      e.preventDefault()
+      // Adds given todo to Firebase Database
+      db.collection('todos').add({
+        todo: addTodoInput,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      // Clears the state of addTodoInput 
+      setAddTodoInput('')
+  }
 
     return (
         <div>
@@ -29,8 +46,8 @@ function AddTodo(props) {
 
                 {/* Add Todo Text Field */}
                 <TextField
-                    value={props.addTodoInput} 
-                    onChange={e=>props.setAddTodoInput(e.target.value)} 
+                    value={addTodoInput} 
+                    onChange={e=>setAddTodoInput(e.target.value)} 
                     id="outlined-basic" 
                     label="Add Todo" 
                     variant="outlined" />
@@ -38,7 +55,7 @@ function AddTodo(props) {
                 {/* Add Todo Text Button */}
                 <Fab
                     type='submit' 
-                    onClick={props.addTodo} 
+                    onClick={addTodo} 
                     color="primary" 
                     aria-label="add">
                     <AddIcon />

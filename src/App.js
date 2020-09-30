@@ -13,6 +13,7 @@ function App() {
 
   // State
   const [todos, setTodos]= useState([])
+  const [editTodo, setEditTodo] = useState('')
   const [addTodoInput, setAddTodoInput] = useState('')
 
   // Fetch Todos from database on app load
@@ -35,9 +36,6 @@ function App() {
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
 
-    // Adds addTodoInput to the end of todos array
-    // setTodos([...todos, addTodoInput])
-
     // Clears the state of addTodoInput 
     setAddTodoInput('')
   }
@@ -49,7 +47,7 @@ function App() {
       <Header />
 
       {/* List of Todos */}
-      <TodoList todos={todos}/> 
+      <TodoList todos={todos} editTodo={editTodo} setEditTodo={setEditTodo}/> 
 
       {/* Input Modal */}
       <AddTodo addTodoInput={addTodoInput} setAddTodoInput={setAddTodoInput} addTodo={addTodo}  />
