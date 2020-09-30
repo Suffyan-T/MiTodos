@@ -26,15 +26,21 @@ export default function Todo(props) {
 
   return (
     <div>
-        <>
-          <List>
+          <List  style={{
+      display: 'flex',
+      width: 1300,
+      flexDirection: "row",
+      margin: 10,
+      borderRadius: 10,
+      backgroundColor: 'white',
+      // boxShadow: "3px 3px 3px 3px #BEBEBE",
+      alignItems: 'center',}}>
               <ListItem>
                   <ListItemText primary='todo' secondary={props.todo.todo}/>
               </ListItem>
               <DeleteForeverIcon onClick={()=> db.collection('todos').doc(props.todo.id).delete()}/>
               <EditTodo todo={props.todo}/>
           </List>
-        </>
     </div>
   );
 }
